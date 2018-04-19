@@ -56,8 +56,10 @@ class ParkingLot:
         self.parking_capacity = self.parking capacity.append(capacity)
         empty=copy.deepcopy(self.capacity)
         self.parking_status.append
-        
-p1=ParkingLot(2,[{'bike':2,'car':3},{'bike':5,'car':8}])
-p1.show_parking_capacity()
-p1.add_vehicle('bike',2)
-p1.show_parking_status()
+
+
+if __name__ == '__main__':
+    p1=ParkingLot(2,[{'bike':2,'car':3},{'bike':5,'car':8}])
+    p1.show_parking_capacity()
+    p1.add_vehicle('bike',2)
+    p1.show_parking_status()
