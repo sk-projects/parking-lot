@@ -1,33 +1,35 @@
-import copy
-
 class Vehicle:
-    veh_type=''
-    veh_id=0
-    
-    def __init__(self,veh_type,veh_id):
-       self.veh_type=veh_type
-       self.veh_id=veh_id
+    count=0
+
+    def __init__(self,veh_id, veh_type, user, checkin, checkout=None):
+        self.veh_type=veh_type
+        self.veh_id=veh_id
+        self.user = user
+        self.checkin = checkin
+        self.checkout = checkout
       
     def show_info(self):
-        print("Vehicle Reistration No :  ", self.veh_id)
+        print("Vehicle Registration No :  ", self.veh_id)
         print("Vehicle Type           :  ", self.veh_type)
 
 class ParkingLot:
-    parking_capacity=[]
-    parking_status=[]
-    valid_vehicle=['bike','car']
-    levels=0
-    parked_vehicles=[]
-    capacity={}
-    
-    def __init__(self,levels,pc):
-        self.levels = levels
-        self.parking_capacity = pc.copy()
-        self.parking_status = copy.deepcopy(pc)
-        for i in self.parking_status:
-            for j in i.keys():
-                i[j]=0
- 
+
+    def __init__(self,parking_capacity, valid_vehicles):
+        import copy
+        self.levels = len(parking_capacity)
+        self.valid_vehicle = valid_vehicles
+        self.parking_capacity = parking_capacity
+        self.parking_status = copy.deepcopy(parking_capacity)
+        for level in self.parking_status:
+            for veh in list(level):
+                level[veh]=0
+
+    def check_space(self, veh_type):
+        for level in range(0,self.levels):
+            if self.parking_capacity[level][veh_type] > self.parking_status[level][veh_type]:
+                return 1
+        return -1
+
     def add_vehicle(self,vr,vt):
         v1=Vehicle(vr,vt)
         if v1.veh_type not in self.valid_vehicle:
@@ -41,7 +43,12 @@ class ParkingLot:
                 else:
                     print('No Parking Space')
             
-            
+    def check_valid_vehicle(self, veh_type):
+        if veh_type not in self.valid_vehicle:
+            return -1
+        else:
+            return 1
+
     def show_parking_capacity(self):
         print(self.parking_capacity)
         
@@ -51,15 +58,3 @@ class ParkingLot:
     def list_parked_vehicles(self):
         for vehicle in self.parked_vehicles:
             print(vehicle.show_info)
-        
-    def add_new_level(self,capacity):
-        self.parking_capacity = self.parking capacity.append(capacity)
-        empty=copy.deepcopy(self.capacity)
-        self.parking_status.append
-
-
-if __name__ == '__main__':
-    p1=ParkingLot(2,[{'bike':2,'car':3},{'bike':5,'car':8}])
-    p1.show_parking_capacity()
-    p1.add_vehicle('bike',2)
-    p1.show_parking_status()
